@@ -3,6 +3,7 @@
     param(
         [string]$APIKey,
         [string]$PageID,
+        [string]$OrganizationID,
         [string]$Path = "$ModuleRoot\$env:USERNAME-$env:COMPUTERNAME-PSStatusPage.xml"
     )
 
@@ -10,6 +11,7 @@ Switch ($PSBoundParameters.Keys)
     {
     'APIKey'{$Script:PSStatusPage.APIKey = $APIKey}
     'PageID'{$Script:PSStatusPage.PageID = $PageID}
+    'OrganizationID'{$Script:PSStatusPage.OrganizationID = $OrganizationID}
     }
 Function Encrypt {
     param([string]$string)
@@ -19,5 +21,5 @@ Function Encrypt {
         }
     }
 #Write the global variable and the xml
-$Script:PSStatusPage | Select -Property @{N='APIKey';E={Encrypt $_.APIKey}},@{N='PageID';E={Encrypt $_.PageID}} | Export-Clixml -Path $Path -Force
+$Script:PSStatusPage | Select-Object -Property @{N='APIKey';E={Encrypt $_.APIKey}},@{N='PageID';E={Encrypt $_.PageID}},@{N="OrganizationID";E={Encrypt $_.OrganizationID}} | Export-Clixml -Path $Path -Force
 }

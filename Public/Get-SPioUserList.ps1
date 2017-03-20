@@ -9,20 +9,12 @@ function Get-SPioUserList {
       $APIKey = $Script:PSStatusPage.APIKey,
       [parameter(Mandatory=$false)]
       [string]
-      $PageID = $Script:PSStatusPage.PageID
+      $OrganizationID = $Script:PSStatusPage.OrganizationID
     )
 $headers = @{
     Authorization = "OAuth $APIKey"
     }
-$URI = "https://api.statuspage.io/v1/pages/$PageID"
-if (!$IncidentID)
-    {
-    $URI = "$URI/subscribers.json"
-    }
-else
-    {
-    $URI = "$URI/incidents/$IncidentID/subscribers.json"
-    }
+$URI = "https://api.statuspage.io/v1/organizations/$($OrganizationID)/users.json"
 try
     {
     $response = Invoke-RestMethod -Method Get -Uri $URI -Headers $headers -ContentType "application/json" -ErrorAction Stop
@@ -31,5 +23,5 @@ catch
     {
     Write-Error $Error[0]
     }
-return $response | Select-Object components,created_at,email,phone_country,phone_number,id,skip_confirmation_notification
+return $response
 }

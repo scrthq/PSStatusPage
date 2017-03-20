@@ -36,7 +36,7 @@ PowerShellVersion = '3.0'
 # PowerShellHostName = ''
 
 # Minimum version of the Windows PowerShell host required by this module
-PowerShellHostVersion = '3.0'
+# PowerShellHostVersion = ''
 
 # Minimum version of Microsoft .NET Framework required by this module
 # DotNetFrameworkVersion = ''
