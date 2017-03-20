@@ -3,9 +3,6 @@ function Get-SPioUserList {
     (
       [parameter(Mandatory=$false)]
       [string]
-      $IncidentID,
-      [parameter(Mandatory=$false)]
-      [string]
       $APIKey = $Script:PSStatusPage.APIKey,
       [parameter(Mandatory=$false)]
       [string]
