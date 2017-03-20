@@ -3,7 +3,7 @@ function Remove-SPioUser {
     Param
     (
       [parameter(Mandatory=$true)]
-      [string]
+      [string[]]
       $UserID,
       [parameter(Mandatory=$false)]
       [string]
@@ -17,7 +17,7 @@ function Remove-SPioUser {
         $headers = @{
             Authorization = "OAuth $APIKey"
             }
-        $result = @()
+        $final = @()
         }
     Process 
         {
@@ -29,7 +29,7 @@ function Remove-SPioUser {
                             try
                                 {
                                 $response = Invoke-RestMethod -Method Delete -Uri $URI -Headers $headers -ContentType "application/json" -ErrorAction Stop
-                                $result += $response
+                                $final += $response
                                 }
                             catch
                                 {
@@ -39,12 +39,12 @@ function Remove-SPioUser {
                                     $reader = New-Object System.IO.StreamReader($result)
                                     $reader.BaseStream.Position = 0
                                     $reader.DiscardBufferedData()
-                                    $resp = $reader.ReadToEnd()
-                                    $response = $resp | ConvertFrom-Json
+                                    $reader.ReadToEnd()
+                                    return
                                     }
                                 catch
                                     {
-                                    Write-Error $resp
+                                    Write-Error $_.Exception.Response
                                     return
                                     }
                                 }
@@ -53,6 +53,6 @@ function Remove-SPioUser {
         }
     End
         {
-            return $result
+            return $final
         }
 }
