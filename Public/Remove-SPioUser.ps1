@@ -39,7 +39,7 @@ function Remove-SPioUser {
                                     $reader = New-Object System.IO.StreamReader($result)
                                     $reader.BaseStream.Position = 0
                                     $reader.DiscardBufferedData()
-                                    $reader.ReadToEnd()
+                                    Write-Error $reader.ReadToEnd()
                                     return
                                     }
                                 catch
